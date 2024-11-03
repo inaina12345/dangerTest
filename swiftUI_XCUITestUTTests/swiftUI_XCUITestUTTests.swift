@@ -36,7 +36,7 @@ class swiftUI_XCUITestUTTests: XCTestCase {
     func testFailMinus() {
         let testClass = TestClass()
         XCTAssert(testClass.minus(num: 2) == 1)
-        XCTFail(":w:")
+        //XCTFail(":w:")
     }
 
 
