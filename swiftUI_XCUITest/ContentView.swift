@@ -48,7 +48,21 @@ struct DetailView: View {
     func test() {
         var aaa = 1
         var aa2 = 2
+
+        var aa3 = 2
+
+        var aa4 = 2
         
+        
+    }
+
+    func test2() {
+        var aaa = 1
+        var aa2 = 2
+
+        var aa3 = 2
+
+        var aa4 = 2
         
         
     }
