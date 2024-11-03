@@ -26,4 +26,9 @@ xcode_summary.ignored_results { |result|
 xcode_summary.report 'test_output/ResultBundle.xcresult'
 
 # If value is `false`, then errors will be reporting as warnings
-xcode_summary.strict = false  
+xcode_summary.strict = false 
+
+
+detect_unused_definition.allow_paths = ["swiftUI_XCUITest", "swiftUI_XCUITestUTTests"]
+# detect_unused_definition.deny_paths = ["Model/*"]
+detect_unused_definition.detect 
