@@ -23,10 +23,10 @@ class swiftUI_XCUITestUTTests: XCTestCase {
         XCTAssert(testClass.add(num: 0) == 1)
     }
     
-//    func testFailAdd() {
-//        let testClass = TestClass()
-//        XCTAssert(testClass.add(num: 1) == 2)
-//    }
+    func testFailAdd() {
+        let testClass = TestClass()
+        XCTAssert(testClass.add(num: 1) == 3)
+    }
     
     func testMinus() {
         let testClass = TestClass()
@@ -36,7 +36,7 @@ class swiftUI_XCUITestUTTests: XCTestCase {
     func testFailMinus() {
         let testClass = TestClass()
         XCTAssert(testClass.minus(num: 2) == 1)
-        //XCTFail(":w:")
+        XCTFail(":w:")
     }
 
 
