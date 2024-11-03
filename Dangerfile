@@ -17,3 +17,6 @@ xcode_summary.ignored_results { |result|
 }
 
 xcode_summary.report 'test_output/ResultBundle.xcresult'
+
+# If value is `false`, then errors will be reporting as warnings
+xcode_summary.strict = false
