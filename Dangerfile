@@ -24,7 +24,9 @@ xcode_summary.ignored_results { |result|
   result.message.include? 'ld' # Ignore ld_warnings
 }
 
-xcode_summary.report 'test_output/ResultBundle.xcresult'
+log = File.join('test_output', 'ResultBundle.xcresult')
+xcode_summary.report log if File.exist?(log)
+# xcode_summary.report 'test_output/ResultBundle.xcresult'
 
 # If value is `false`, then errors will be reporting as warnings
 xcode_summary.strict = false
