@@ -20,7 +20,8 @@ jobs:
         # エラーでも処理を継続する
         continue-on-error: true
         run:
-         xcodebuild clean test
+         xcodebuild build clean |
+         xcodebuild test
          -project swiftUI_XCUITest.xcodeproj
          -scheme swiftUI_XCUITestUTTests
          -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808"
