@@ -16,4 +16,4 @@ xcode_summary.ignored_results { |result|
   result.message.include? 'ld' # Ignore ld_warnings
 }
 
-xcode_summary.report 'res.xcresult'
+xcode_summary.report 'test_output/ResultBundle.xcresult'
