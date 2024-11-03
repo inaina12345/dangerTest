@@ -16,27 +16,29 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: xcodebuild
+     # - name: xcodebuild
+     #   run:
+     #    xcodebuild build
+     #    -project swiftUI_XCUITest.xcodeproj
+     #    -scheme swiftUI_XCUITest
+     #    -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808"
+     #    OTHER_SWIFT_FLAGS="-Xfrontend -warn-long-function-bodies=100"
+     #    > build.log
+      - name: xcodebuild test
+        # エラーでも処理を継続する
+        continue-on-error: true
         run:
          xcodebuild test
          -project swiftUI_XCUITest.xcodeproj
-         -scheme swiftUI_XCUITestTests
+         -scheme swiftUI_XCUITestUTTests
          -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808"
          -resultBundlePath test_output/ResultBundle.xcresult
-#      - name: ruby version
-#        run:
-#          rbenv local 3.1.4
-#         xcodebuild test
-#         -project swiftUI_XCUITest.xcodeproj
-#         -scheme swiftUI_XCUITestTests
-#         -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808"
-#         -resultBundlePath test_output/ResultBundle.xcresult
       - name: bundle install
         run:
           bundle install
-      - name: exec danger
+      - name: exec danger unittestCI
         run:
-          bundle exec danger
+          bundle exec danger --dangerfile=Dangerfile.unittestCI
 #      - name: Danger CI Test
 #        env:
 #         DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
