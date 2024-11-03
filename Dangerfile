@@ -7,6 +7,12 @@
 #xcode_warnings.build_timing_summary = true
 #xcode_warnings.analyze_file 'build.log'
 
+github.dismiss_out_of_range_messages({
+  error: false,
+  warning: true,
+  message: true,
+  markdown: true
+})
 
 xcode_summary.inline_mode = true
 # Ignoring warnings from Pods
