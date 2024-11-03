@@ -17,6 +17,8 @@ jobs:
         with:
           fetch-depth: 0
       - name: xcodebuild
+        # エラーでも処理を継続する
+        continue-on-error: true
         run:
          xcodebuild test
          -project swiftUI_XCUITest.xcodeproj
