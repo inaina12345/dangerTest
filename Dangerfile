@@ -9,8 +9,8 @@
 
 github.dismiss_out_of_range_messages({
   error: false,
-  warning: true,
-  message: true,
+  warning: false,
+  message: false,
   markdown: true
 })
 
