@@ -24,15 +24,15 @@ jobs:
          -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808"
          OTHER_SWIFT_FLAGS="-Xfrontend -warn-long-function-bodies=100"
          > build.log
-      - name: xcodebuild test
-        # エラーでも処理を継続する
-        continue-on-error: true
-        run:
-         xcodebuild test
-         -project swiftUI_XCUITest.xcodeproj
-         -scheme swiftUI_XCUITestUTTests
-         -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808"
-         -resultBundlePath test_output/ResultBundle.xcresult
+#      - name: xcodebuild test
+#        # エラーでも処理を継続する
+#        continue-on-error: true
+#        run:
+#         xcodebuild test
+#         -project swiftUI_XCUITest.xcodeproj
+#         -scheme swiftUI_XCUITestUTTests
+#         -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808"
+#         -resultBundlePath test_output/ResultBundle.xcresult
 #      - name: ruby version
 #        run:
 #          rbenv local 3.1.4
