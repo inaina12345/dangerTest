@@ -17,10 +17,17 @@ jobs:
         with:
           fetch-depth: 0
       - name: xcodebuild
+        run:
+         xcodebuild build
+         -project swiftUI_XCUITest.xcodeproj
+         -scheme swiftUI_XCUITest
+         -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808"
+         OTHER_SWIFT_FLAGS="-Xfrontend -warn-long-function-bodies=100"
+         -showBuildTimingSummary | xcpretty > build.log
+      - name: xcodebuild test
         # エラーでも処理を継続する
         continue-on-error: true
         run:
-         xcodebuild build clean |
          xcodebuild test
          -project swiftUI_XCUITest.xcodeproj
          -scheme swiftUI_XCUITestUTTests
