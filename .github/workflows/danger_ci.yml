@@ -37,9 +37,9 @@ jobs:
       - name: bundle install
         run:
           bundle install
-      - name: exec danger
+      - name: exec danger Dangerfile.unittestCI
         run:
-          bundle exec danger
+          bundle exec danger --dangerfile=Dangerfile.unittestCI
 #      - name: Danger CI Test
 #        env:
 #         DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}

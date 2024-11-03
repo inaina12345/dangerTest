@@ -1,0 +1,14 @@
+# PRの範囲外のメッセージを無視する
+github.dismiss_out_of_range_messages({
+    error: false,
+    warning: false,
+    message: false,
+    markdown: true
+})
+
+# xcode_warnings 設定
+xcode_warnings.show_linker_warnings = true
+#dangerでbuild_timing_summaryの関数が見つからないためコメントアウト
+#xcode_warnings.build_timing_summary = true
+xcode_warnings.analyze_file 'build.log'
+
