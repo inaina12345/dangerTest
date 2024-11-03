@@ -21,7 +21,7 @@ jobs:
          -scheme swiftUI_XCUITest
          -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808"
          OTHER_SWIFT_FLAGS="-Xfrontend -warn-long-function-bodies=100"
-         -showBuildTimingSummary | tee build.log
+         -showBuildTimingSummary > build.log
 #      - name: ruby version
 #        run:
 #          rbenv local 3.1.4
