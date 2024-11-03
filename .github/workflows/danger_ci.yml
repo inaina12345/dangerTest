@@ -1,22 +1,52 @@
-name: Xcode - pull request action
+name: Danger CI Test
 
 on:
   pull_request:
 
+env:
+  DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   build:
-    name: Build and XCTest
-    runs-on: macos-14
+    name: Danger CI Test
+    runs-on: self-hosted
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build time summary
-        run: |
-         xcodebuild -project swiftUI_XCUITest.xcodeproj
-         -scheme swiftUI_XCUITest build
-         CODE_SIGNING_REQUIRED=NO \
-         CODE_SIGNING_ALLOWED=NO \
-         -allowProvisioningUpdates
-         -destination platform="iOS Simulator,name=iPhone 15"
-         OTHER_SWIFT_FLAGS="-Xfrontend -warn-long-function-bodies=100" -showBuildTimingSummary | tee build.log
+        with:
+          fetch-depth: 0
+      - name: xcodebuild
+        run:
+         xcodebuild build
+         -project swiftUI_XCUITest.xcodeproj
+         -scheme swiftUI_XCUITest
+         -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808"
+         -showBuildTimingSummary
+         > build.log
+#      - name: ruby version
+#        run:
+#          rbenv local 3.1.4
+#         xcodebuild test
+#         -project swiftUI_XCUITest.xcodeproj
+#         -scheme swiftUI_XCUITestTests
+#         -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808"
+#         -resultBundlePath test_output/ResultBundle.xcresult
+      - name: bundle install
+        run:
+          bundle install
+      - name: exec danger
+        run:
+          bundle exec danger
+#      - name: Danger CI Test
+#        env:
+#         DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        run: |
+#         brew install danger/tap/danger-swift
+#         # Run danger
+#         danger-swift ci
+
+      #- name: Danger JS
+      #  uses: danger/danger-js@X.Y.Z
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
