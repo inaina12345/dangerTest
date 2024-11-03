@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04436C862CD73AED00FFF728 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04436C852CD73AED00FFF728 /* Test.swift */; };
 		047DF5892A426CF700D9C949 /* swiftUI_XCUITestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047DF5882A426CF700D9C949 /* swiftUI_XCUITestApp.swift */; };
 		047DF58B2A426CF700D9C949 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047DF58A2A426CF700D9C949 /* ContentView.swift */; };
 		047DF58D2A426CFA00D9C949 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 047DF58C2A426CFA00D9C949 /* Assets.xcassets */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		04436C7A2CD7287C00FFF728 /* swiftUI_XCUITestUTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = swiftUI_XCUITestUTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		04436C852CD73AED00FFF728 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		047DF5852A426CF700D9C949 /* swiftUI_XCUITest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = swiftUI_XCUITest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		047DF5882A426CF700D9C949 /* swiftUI_XCUITestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swiftUI_XCUITestApp.swift; sourceTree = "<group>"; };
 		047DF58A2A426CF700D9C949 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 		047DF5872A426CF700D9C949 /* swiftUI_XCUITest */ = {
 			isa = PBXGroup;
 			children = (
+				04436C852CD73AED00FFF728 /* Test.swift */,
 				047DF5882A426CF700D9C949 /* swiftUI_XCUITestApp.swift */,
 				047DF58A2A426CF700D9C949 /* ContentView.swift */,
 				047DF58C2A426CFA00D9C949 /* Assets.xcassets */,
@@ -262,6 +265,7 @@
 			files = (
 				047DF58B2A426CF700D9C949 /* ContentView.swift in Sources */,
 				047DF5892A426CF700D9C949 /* swiftUI_XCUITestApp.swift in Sources */,
+				04436C862CD73AED00FFF728 /* Test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
