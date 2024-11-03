@@ -21,7 +21,7 @@ class TestClass {
         let val = "unused variable aaa"
         
         let val2 = "unused variable aaa2"
-        let val3 = 0
+//        let val3 = 0
         
         return num - 1
         
