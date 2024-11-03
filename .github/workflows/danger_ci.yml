@@ -6,26 +6,29 @@ on:
 jobs:
   build:
     name: Danger CI Test
-    runs-on: self-hosted 
+    runs-on: self-hosted
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: xcodebuild
-        run: |
-         xcodebuild build -project swiftUI_XCUITest.xcodeproj -scheme swiftUI_XCUITest -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808"
-      - name: xcodebuild test
         run:
-         xcodebuild test 
-         -project swiftUI_XCUITest.xcodeproj 
-         -scheme swiftUI_XCUITestTests 
-         -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808" 
-         -resultBundlePath test_output/ResultBundle.xcresult
-      - name: xcrun xcresulttool get
+         xcodebuild build
+         -project swiftUI_XCUITest.xcodeproj
+         -scheme swiftUI_XCUITest
+         -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808"
+         OTHER_SWIFT_FLAGS="-Xfrontend -warn-long-function-bodies=100"
+         -showBuildTimingSummary | tee build.log
+#      - name: xcodebuild test
+#        run:
+#         xcodebuild test
+#         -project swiftUI_XCUITest.xcodeproj
+#         -scheme swiftUI_XCUITestTests
+#         -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808"
+#         -resultBundlePath test_output/ResultBundle.xcresult
+      - name: exec danger
         run:
-         xcrun xcresulttool get
-         --path test_output/ResultBundle.xcresult
-         --format json --legacy flag > ressult.json 
+          bundle exec danger
 #      - name: Danger CI Test
 #        env:
 #         DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
