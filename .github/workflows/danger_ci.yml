@@ -26,6 +26,9 @@ jobs:
 #         -scheme swiftUI_XCUITestTests
 #         -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808"
 #         -resultBundlePath test_output/ResultBundle.xcresult
+      - name: bundle install
+        run:
+          bundle install
       - name: exec danger
         run:
           bundle exec danger
