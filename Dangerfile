@@ -8,25 +8,25 @@
 #xcode_warnings.build_timing_summary = true
 #xcode_warnings.analyze_file 'build.log'
 
-github.dismiss_out_of_range_messages({
-  error: false,
-  warning: false,
-  message: false,
-  markdown: true
-})
 
-xcode_summary.inline_mode = true
-# Ignoring warnings from Pods
-xcode_summary.ignored_files = 'Pods/**'
+def xcode_summary
+  github.dismiss_out_of_range_messages({
+    error: false,
+    warning: false,
+    message: false,
+    markdown: true
+  })
 
-# Ignoring specific warnings
-xcode_summary.ignored_results { |result|
-  result.message.include? 'ld' # Ignore ld_warnings
-}
+  xcode_summary.inline_mode = true
+  # Ignoring warnings from Pods
+  xcode_summary.ignored_files = 'Pods/**'
 
-log = File.join('test_output', 'ResultBundle.xcresult')
-xcode_summary.report log if File.exist?(log)
-# xcode_summary.report 'test_output/ResultBundle.xcresult'
+  # Ignoring specific warnings
+  xcode_summary.ignored_results { |result|
+    result.message.include? 'ld' # Ignore ld_warnings
+  }
+  code_summary.report 'test_output/ResultBundle.xcresult'
 
-# If value is `false`, then errors will be reporting as warnings
-xcode_summary.strict = false
+  # If value is `false`, then errors will be reporting as warnings
+  xcode_summary.strict = false  
+end
