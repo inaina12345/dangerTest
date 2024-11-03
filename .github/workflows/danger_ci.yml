@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     name: Build and XCTest
-    runs-on: macos-15
+    runs-on: self-hosted
 
     steps:
       - name: Checkout
