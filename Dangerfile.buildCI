@@ -12,3 +12,6 @@ xcode_warnings.show_linker_warnings = true
 #xcode_warnings.build_timing_summary = true
 xcode_warnings.analyze_file 'build.log'
 
+detect_unused_definition.allow_paths = ["swiftUI_XCUITest", "swiftUI_XCUITestUTTests"]
+# detect_unused_definition.deny_paths = ["Model/*"]
+detect_unused_definition.detect
