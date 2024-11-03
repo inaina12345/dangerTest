@@ -20,6 +20,8 @@ class TestClass {
         
         let val = "unused variable aaa"
         
+        let val2 = "unused variable aaa2"
+        
         return num - 1
         
     }
