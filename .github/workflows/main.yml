@@ -38,7 +38,7 @@ jobs:
           bundle install
       - name: exec danger xcode_summary
         run:
-          bundle exec danger xcode_summary
+          bundle exec danger
 #      - name: Danger CI Test
 #        env:
 #         DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
