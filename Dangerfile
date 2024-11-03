@@ -7,4 +7,13 @@
 #xcode_warnings.build_timing_summary = true
 #xcode_warnings.analyze_file 'build.log'
 
-xcode_summary.report 'MyApp.xcresult'
+
+# Ignoring warnings from Pods
+xcode_summary.ignored_files = 'Pods/**'
+
+# Ignoring specific warnings
+xcode_summary.ignored_results { |result|
+  result.message.include? 'ld' # Ignore ld_warnings
+}
+
+xcode_summary.report 'res.xcresult'
