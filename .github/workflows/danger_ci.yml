@@ -34,7 +34,7 @@ jobs:
         env:
          DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run:
-          bundle exec danger
+          danger ci
 #      - name: Danger CI Test
 #        env:
 #         DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
