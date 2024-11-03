@@ -1,4 +1,4 @@
-7name: Danger CI Test
+name: Danger CI Test
 
 on:
   pull_request:
