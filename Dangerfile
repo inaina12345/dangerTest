@@ -8,6 +8,7 @@
 #xcode_warnings.analyze_file 'build.log'
 
 
+xcode_summary.inline_mode = true
 # Ignoring warnings from Pods
 xcode_summary.ignored_files = 'Pods/**'
 
