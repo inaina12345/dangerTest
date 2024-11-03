@@ -44,13 +44,39 @@ struct DetailView: View {
         .navigationBarTitle("Detail")
     }
     
+
+    func test() {
+        var aaa = 1
+        var aa2 = 2
+
+        var aa3 = 2
+
+        var aa4 = 2
+        
+        
+    }
+
+    func test2() {
+        var aaa = 1
+        var aa2 = 2
+
+        var aa3 = 2
+
+        var aa4 = 2
+        
+        
+    }
+    
     func get_sample_test() -> Int {
         var test1 = 0
         var test2 = 1
         var test3 = 0
         var test4 = 1
+        
         var test5 = 0
         var test6 = 1
+        
+        var test7 = 0
         
         return test6
     }
