@@ -25,8 +25,8 @@ jobs:
 #          ruby-version: '3.x' # あなたのプロジェクトのRubyバージョンに合わせてください
 #          bundler-cache: true # Gemfile.lockがあれば依存関係をキャッシュします
 
-      - name: Install Slather
-        run: gem install slather # Slatherをインストールします
+#      - name: Install Slather
+#        run: gem install slather # Slatherをインストールします
 #        run: bundle install 
 
       - name: Get changed source files for PR
