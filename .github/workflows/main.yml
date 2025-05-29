@@ -31,7 +31,7 @@ jobs:
          xcodebuild test
          -project swiftUI_XCUITest.xcodeproj
          -scheme swiftUI_XCUITestUTTests
-         -destination "id=B7C1A209-ACF8-4012-BB21-14B7CDBD3808"
+         -destination "id=FE90E93C-1A15-42A5-AD86-9F89BECF8D38"
          -resultBundlePath test_output/ResultBundle.xcresult
       - name: bundle install
         run:
