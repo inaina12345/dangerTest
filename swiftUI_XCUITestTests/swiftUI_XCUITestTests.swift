@@ -13,5 +13,7 @@ final class swiftUI_XCUITestTests: XCTestCase {
     func aaa_test() {
         let detail = DetailView()
         XCTAssert(detail.get_sample_test() == 1)
+        
+        
     }
 }

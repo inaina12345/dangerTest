@@ -54,4 +54,15 @@ struct DetailView: View {
         
         return test6
     }
+    
+    func get_sample_test2() -> Int {
+        var test1 = 0
+        var test2 = 1
+        var test3 = 0
+        var test4 = 1
+        var test5 = 0
+        var test6 = 1
+        
+        return test6
+    }
 }
