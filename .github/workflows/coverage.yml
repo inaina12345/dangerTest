@@ -25,9 +25,9 @@ jobs:
 #          ruby-version: '3.x' # あなたのプロジェクトのRubyバージョンに合わせてください
 #          bundler-cache: true # Gemfile.lockがあれば依存関係をキャッシュします
 
-      - name: Install Slather
+#      - name: Install Slather
 #        run: gem install slather # Slatherをインストールします
-        run: bundle install 
+#        run: bundle install 
 
       - name: Get changed source files for PR
         id: get_changed_files
@@ -57,8 +57,8 @@ jobs:
         # 変更されたソースファイルがある場合のみ実行
         if: steps.get_changed_files.outputs.no_source_changes == 'false'
         run: |
-          echo "scheme: YourScheme" > .slather.yml
-          echo "workspace: YourWorkspace.xcworkspace" >> .slather.yml # プロジェクトの場合は xcodeproj: YourProject.xcodeproj
+          echo "scheme: swiftUI_XCUITest" > .slather.yml
+          echo "xcodeproj: swiftUI_XCUITest.xcodeproj" >> .slather.yml # プロジェクトの場合は xcodeproj: YourProject.xcodeproj
           echo "html: true" >> .slather.yml
           echo "output_directory: slather_pr_report" >> .slather.yml
           echo "source_files:" >> .slather.yml
@@ -76,9 +76,9 @@ jobs:
         if: steps.get_changed_files.outputs.no_source_changes == 'false'
         run: |
           xcodebuild test \
-            -workspace YourWorkspace.xcworkspace \
-            -scheme YourScheme \
-            -destination "platform=iOS Simulator,name=iPhone 15" \
+            -project swiftUI_XCUITest.xcodeproj \
+            -scheme swiftUI_XCUITest \
+            -destination "platform=iOS Simulator,name=iPhone 16" \
             -enableCodeCoverage YES \
             -resultBundlePath "build/test_results.xcresult" \
             clean build
