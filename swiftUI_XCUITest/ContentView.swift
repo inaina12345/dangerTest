@@ -53,6 +53,8 @@ struct DetailView: View {
 
         var aa4 = 2
         
+        var aa5 = 0
+        
         
     }
 

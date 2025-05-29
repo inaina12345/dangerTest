@@ -1,0 +1,142 @@
+name: Targeted Code Coverage Report for PR
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened] # PRが開かれた、同期された、再度開かれた場合に実行
+
+jobs:
+  build-and-report:
+    #runs-on: macos-latest # XcodeのビルドとテストにはmacOSが必要です
+    runs-on: self-hosted
+
+    permissions:
+      pull-requests: write # PRにコメントするために必要
+      contents: read       # コードをチェックアウトするために必要
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # PRの差分を正確に取得するために履歴全体をフェッチします
+
+#      - name: Set up Ruby
+#        uses: ruby/setup-ruby@v1
+#        with:
+#          ruby-version: '3.x' # あなたのプロジェクトのRubyバージョンに合わせてください
+#          bundler-cache: true # Gemfile.lockがあれば依存関係をキャッシュします
+
+#      - name: Install Slather
+#        run: gem install slather # Slatherをインストールします
+#        run: bundle install 
+
+      - name: Get changed source files for PR
+        id: get_changed_files
+        run: |
+          # PRのベースブランチとヘッドブランチの差分から、変更されたSwift/Objective-Cファイルのみをリストアップします。
+          # --diff-filter=AMCR: 追加(A), 変更(M), コピー(C), リネーム(R)されたファイル
+          # --name-only: ファイル名のみを出力
+          # grep でソースファイルに絞り込みます
+          # xargs echo でスペース区切りの文字列にして環境変数にセットします
+          
+          # GitHub ActionsのPRの場合、HEADは現在のPRブランチ、BASEはターゲットブランチです
+          CHANGED_FILES=$(git diff --name-only --diff-filter=AMCR ${{ github.event.pull_request.base.sha }}..${{ github.sha }} | grep -E '\.(swift|m|mm|h|hpp|cpp)$' | xargs echo)
+          
+          echo "CHANGED_FILES=${CHANGED_FILES}" >> $GITHUB_ENV
+          echo "Detected changed files: ${CHANGED_FILES}"
+          
+          # 変更されたファイルがない場合、後続のステップをスキップするためにフラグを設定
+          if [ -z "${CHANGED_FILES}" ]; then
+            echo "::set-output name=no_source_changes::true"
+          else
+            echo "::set-output name=no_source_changes::false"
+          fi
+        # ID `get_changed_files` を持つこのステップの出力として `no_source_changes` を設定します
+        # 後続のステップで `if: steps.get_changed_files.outputs.no_source_changes == 'true'` のように利用できます
+
+      - name: Generate dynamic .slather.yml
+        # 変更されたソースファイルがある場合のみ実行
+        if: steps.get_changed_files.outputs.no_source_changes == 'false'
+        run: |
+          echo "scheme: swiftUI_XCUITest" > .slather.yml
+          echo "xcodeproj: swiftUI_XCUITest.xcodeproj" >> .slather.yml # プロジェクトの場合は xcodeproj: YourProject.xcodeproj
+          echo "html: true" >> .slather.yml
+          echo "output_directory: slather_pr_report" >> .slather.yml
+          echo "source_files:" >> .slather.yml
+          # 環境変数 CHANGED_FILES の各ファイルをYAMLのリストとして追加します
+          for file in $CHANGED_FILES; do
+            # 相対パスを正規化（./ を除去など）
+            normalized_file=$(echo "$file" | sed 's/^\.\///')
+            echo "  - \"${normalized_file}\"" >> .slather.yml
+          done
+          echo "Generated .slather.yml:"
+          cat .slather.yml
+
+      - name: Run Xcode Tests with Coverage
+        # 変更されたソースファイルがある場合のみ実行
+        if: steps.get_changed_files.outputs.no_source_changes == 'false'
+        run: |
+          xcodebuild test \
+            -project swiftUI_XCUITest.xcodeproj \
+            -scheme swiftUI_XCUITest \
+            -destination "platform=iOS Simulator,name=iPhone 16" \
+            -enableCodeCoverage YES \
+            -resultBundlePath "build/test_results.xcresult" \
+            clean build
+
+      - name: Run Slather for targeted coverage
+        # 変更されたソースファイルがある場合のみ実行
+        if: steps.get_changed_files.outputs.no_source_changes == 'false'
+        run: |
+          slather coverage # .slather.yml を自動的に読み込みます
+        env:
+          # Slatherがxcresultbundleを正しく見つけるために、パスを通す必要がある場合があります
+          XCODE_RESULT_BUNDLE_PATH: "build/test_results.xcresult"
+
+      - name: Upload Slather PR Report
+        # 変更されたソースファイルがある場合のみ実行
+        if: steps.get_changed_files.outputs.no_source_changes == 'false'
+        uses: actions/upload-artifact@v4
+        with:
+          name: slather-pr-coverage-report
+          path: slather_pr_report # .slather.yml で指定した出力ディレクトリ
+
+      - name: Comment on PR with report link (No source changes)
+        # 変更されたソースファイルがない場合のみコメント
+        if: steps.get_changed_files.outputs.no_source_changes == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "ℹ️ このPRにはソースコードの変更がないため、コードカバレッジレポートは生成されませんでした。"
+            })
+
+      - name: Comment on PR with report link
+        # 変更されたソースファイルがある場合のみコメント
+        if: steps.get_changed_files.outputs.no_source_changes == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const run_id = context.runId;
+            const repo_name = context.repo.owner + '/' + context.repo.repo;
+            const artifact_url = `https://github.com/${repo_name}/actions/runs/${run_id}/artifacts/slather-pr-coverage-report`;
+            
+            const comment_body = `
+            ### 🔍 PR関連ファイルのカバレッジレポート
+
+            このPRで変更・追加されたファイルのコードカバレッジレポートを生成しました。
+            以下のURLからZIPファイルをダウンロードできます。
+
+            レポートを開くには、ダウンロードしたZIPファイルを解凍し、\`slather_pr_report/index.html\` をブラウザで開いてください。
+
+            [**PRのカバレッジレポートをダウンロード**](${artifact_url})
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment_body
+            })
